@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/fs"
 	"log"
@@ -39,7 +38,6 @@ func parse(b []byte, target string) {
 		// typ may be empty string
 		typ := find(field, regTyp)
 		name := find(field, regName)
-		fmt.Println(name)
 		tmap[idx] = Wraper(typ)
 		if name == "" {
 			nmap[idx] = Wraper02(typ)
@@ -94,7 +92,7 @@ func Wraper02(typ string) func(string) string {
 
 // ignore original name
 func Wraper03(str string) func(string) string {
-	return func(string) string { return str }
+	return func(string) string { return strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "") }
 }
 
 func s2i(str string) int {
